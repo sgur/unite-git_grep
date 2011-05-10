@@ -1,5 +1,5 @@
 ﻿"=============================================================================
-" FILE: everything.vim
+" FILE: git_grep.vim
 " Last Modified: 10 May 2011.
 " Description: Unite から git grep を利用するための source
 " Usage: :Unite git_grep<Return>
