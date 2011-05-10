@@ -1,3 +1,10 @@
+﻿"=============================================================================
+" FILE: everything.vim
+" Last Modified: 10 May 2011.
+" Description: Unite から git grep を利用するための source
+" Usage: :Unite git_grep<Return>
+" Notes:
+"=============================================================================
 function! unite#sources#git_grep#define()"{{{
 	return s:source
 endfunction"}}}
@@ -6,6 +13,7 @@ let s:source = {
 			\ 'name'           : 'git_grep',
 			\ 'is_volatile'    : 1,
 			\ 'max_candidates' : 30,
+			\ 'required_pattern_length': 3,
 			\ }
 
 function! s:source.gather_candidates(args, context)"{{{
