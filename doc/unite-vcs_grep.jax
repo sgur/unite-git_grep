@@ -1,0 +1,92 @@
+*unite-vcs_grep.txt*	カレントディレクトリ以下のバージョン管理されているファイルにgrepする
+
+Author  : sgur <sgurrr@gmail.com>
+Updated : 2011-06-29
+Version : 0.0.2
+License : MIT license {{{
+
+	Permission is hereby granted, free of charge, to any person obtaining
+	a copy of this software and associated documentation files (the
+	"Software"), to deal in the Software without restriction, including
+	without limitation the rights to use, copy, modify, merge, publish,
+	distribute, sublicense, and/or sell copies of the Software, and to
+	permit persons to whom the Software is furnished to do so, subject to
+	the following conditions:
+	The above copyright notice and this permission notice shall be
+	included in all copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+	IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+目次						*unite-vcs_grep-contents*
+
+	概要			|unite-vcs_grep-introduction|
+	インストール		|unite-vcs_grep-install|
+	使い方			|unite-vcs_grep-usage|
+
+==============================================================================
+概要						*unite-vcs_grep-introduction*
+
+	*unite-vcs_grep* は、カレントディレクトリ以下に対して 'git grep' を実行
+	し、検索結果の一覧に対してジャンプする機能を提供する |unite| の source
+	です。
+	git に加え、'hg grep -n .' 相当のコマンドもサポートしています。
+
+==============================================================================
+インストール					*unite-vcs_grep-install*
+
+	配布アーカイブに含まれるファイル群を、そのフォルダごと Vim の
+	'runtimepath' にコピーします。
+	通常は、$HOME/.vim（Windows の場合は $HOME/vimfiles ）となります。
+
+	インストール後の配置は以下のような配置になります。
+>
+	$HOME/.vim/autoload/unite/sources/*.vim
+	$HOME/.vim/doc/unite-vcs_grep.jax
+<
+
+	|unite-vcs_grep| は内部で git もしくは hg のコマンドを実行しています。
+	Windows 環境において |vimproc| を利用していない場合、入力の度に DOS 窓
+	が開いてしまい、あまり実用的ではないと思いますので、別途 |vimproc| の
+	導入をお勧めします。
+
+==============================================================================
+使い方						*unite-vcs_grep-usage*
+
+	|unite|の使い方については、unite.vim のヘルプを参照して下さい。ここで
+	は、unite.vim の source である |unite-vcs_grep| の使い方を説明します。
+
+	カレントディレクトリ以下に対して検索を行うには、source として vcs_grep
+	を指定し、:Unite を実行します。
+>
+	:Unite vcs_grep
+<
+	カレントディレクトリが git もくは Mercurial のバージョン管理下であれば、
+	入力された単語を含むファイルの一覧が表示されます。
+
+	内部で vimproc を利用し、 'git grep' もしくは 'hg grep' を実行している
+	ため、リポジトリのファイル数等にもよりますが、検索結果の一覧が表示され
+	るまで少し時間がかかります。
+
+	また、git のみに限定して検索を行いたい場合は、source として
+	vcs_grep/hg が利用できます。
+>
+	:Unite vcs_grep/git
+<
+	同様に Mercurial のみに限定する場合は、vcs_grep/hg が利用できます。
+>
+	:Unite vcs_grep/hg
+<
+
+==============================================================================
+更新履歴					*unite-vcs_grep-changelog*
+
+https://github.com/sgur/unite-git_grep/commits/master
+
+vim:tw=78:ts=8:ft=help:norl:noet:ai
