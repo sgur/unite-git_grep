@@ -34,21 +34,19 @@ endfunction"}}}
 
 function! unite#sources#git_grep#grep(input)"{{{
 	let result = unite#util#system('git grep -n ' . a:input)
-	let matches = split(result, '\r\n\|\r\|\n')
-	let candidates = []
-	for entry in matches
-		let path = matchstr(entry, '^[^:]\+\ze:')
-		let line = matchstr(entry, '^[^:]\+:\zs[0-9]\+\ze:')
-		let dict = {
-					\ 'word': entry,
-					\ 'source': 'vcs_grep/git',
-					\ 'kind' : 'jump_list',
-					\ 'action__path': path,
-					\ 'action__line': line,
-					\ }
-		call add(candidates, dict)
-	endfor
-	return candidates
+	let candidates = split(result, '\r\n\|\r\|\n')
+	return map(candidates, 's:format_candidate(v:val)')
+endfunction"}}}
+
+function! s:format_candidate(entry)"{{{
+	let matches = matchlist(a:entry, '^\([^:]\+\ze\):\(\zs[0-9]\+\ze\):')
+	return {
+				\ 'word': a:entry,
+				\ 'source': 'vcs_grep/git',
+				\ 'kind' : 'jump_list',
+				\ 'action__path': matches[1],
+				\ 'action__line': matches[2],
+				\ }
 endfunction"}}}
 
 " vim: foldmethod=marker
