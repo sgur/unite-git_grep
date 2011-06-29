@@ -33,7 +33,7 @@ function! s:source.hooks.on_init(args, context)"{{{
 endfunction"}}}
 
 " hg grep -n
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context)"{{{
 	if s:vcs_type == 'git'
 		return unite#sources#git_grep#grep(a:context.input)
 	elseif s:vcs_type == 'hg'

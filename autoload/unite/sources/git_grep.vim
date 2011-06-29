@@ -23,7 +23,7 @@ function! s:source.hooks.on_init(args, context)"{{{
 	endif
 endfunction"}}}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context)"{{{
 	return unite#sources#git_grep#grep(a:context.input)
 endfunction"}}}
 
