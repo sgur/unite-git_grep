@@ -34,25 +34,28 @@ endfunction"}}}
 
 function! unite#sources#hg_grep#grep(input)"{{{
 	let result = unite#util#system('hg grep -n ' . a:input . ' .')
-	let matches = split(result, '\r\n\|\r\|\n')
+	let candidates = split(result, '\r\n\|\r\|\n')
+	let sub_path = s:sub_path()
+	return map(candidates, 's:format_candidate('
+				\ . 'substitute(v:val, ":\[0-9\]\\ze:", "", ""), '
+				\ . 'sub_path)')
+endfunction"}}}
+
+function! s:sub_path()"{{{
 	let root = unite#util#system('hg root')[0:-2]
-	let sub_path = unite#util#substitute_path_separator(strpart(getcwd(), len(root))) .'/'
-	let candidates = []
-	for entry in matches
-		let entry = substitute(entry, ':[0-9]\ze:', '', 'g')
-		let path = matchstr(entry, '^[^:]\+\ze:')
-		let line = matchstr(entry, '^[^:]\+:\zs[0-9]\+\ze:')
-		let skip = len(matchstr(path, sub_path[1:]))
-		let dict = {
-					\ 'word': strpart(entry, skip),
-					\ 'source': 'vcs_grep/hg',
-					\ 'kind' : 'jump_list',
-					\ 'action__path': strpart(path, skip),
-					\ 'action__line': line,
-					\ }
-		call add(candidates, dict)
-	endfor
-	return candidates
+	return unite#util#substitute_path_separator(strpart(getcwd(), len(root))) .'/'
+endfunction"}}}
+
+function! s:format_candidate(entry, sub_path)"{{{
+	let matches = matchlist(a:entry, '^\([^:]\+\ze\):\(\zs[0-9]\+\ze\):')
+	let skip = len(matchstr(matches[1], a:sub_path[1:]))
+	return {
+				\ 'word': strpart(a:entry, skip),
+				\ 'source': 'vcs_grep/hg',
+				\ 'kind' : 'jump_list',
+				\ 'action__path': strpart(matches[1], skip),
+				\ 'action__line': matches[2],
+				\ }
 endfunction"}}}
 
 " vim: foldmethod=marker
