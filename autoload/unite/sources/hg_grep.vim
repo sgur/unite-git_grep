@@ -45,7 +45,7 @@ function! unite#sources#hg_grep#grep(input)"{{{
 		let skip = len(matchstr(path, sub_path[1:]))
 		let dict = {
 					\ 'word': strpart(entry, skip),
-					\ 'source': 'hg_grep',
+					\ 'source': 'vcs_grep/hg',
 					\ 'kind' : 'jump_list',
 					\ 'action__path': strpart(path, skip),
 					\ 'action__line': line,

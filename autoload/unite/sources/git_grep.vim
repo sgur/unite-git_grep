@@ -41,7 +41,7 @@ function! unite#sources#git_grep#grep(input)"{{{
 		let line = matchstr(entry, '^[^:]\+:\zs[0-9]\+\ze:')
 		let dict = {
 					\ 'word': entry,
-					\ 'source': 'git_grep',
+					\ 'source': 'vcs_grep/git',
 					\ 'kind' : 'jump_list',
 					\ 'action__path': path,
 					\ 'action__line': line,
