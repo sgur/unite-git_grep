@@ -35,10 +35,8 @@ endfunction"}}}
 " hg grep -n
 function! s:source.gather_candidates(args, context)"{{{
 	if s:vcs_type == 'git'
-		echo 'git'
 		return unite#sources#git_grep#grep(a:context.input)
 	elseif s:vcs_type == 'hg'
-		echo 'hg'
 		return unite#sources#hg_grep#grep(a:context.input)
 	else
 		return []
