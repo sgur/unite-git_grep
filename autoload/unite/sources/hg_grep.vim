@@ -5,6 +5,12 @@
 " Usage: :Unite hg_grep<Return>
 " Notes:
 "=============================================================================
+
+" Variables  "{{{
+call unite#util#set_default('g:unite_source_hg_grep_required_pattern_length', 3)
+call unite#util#set_default('g:unite_source_hg_grep_max_candidates', 100)
+"}}}
+
 function! unite#sources#hg_grep#define()"{{{
 	return s:source
 endfunction"}}}
@@ -12,8 +18,8 @@ endfunction"}}}
 let s:source = {
 			\ 'name'           : 'vcs_grep/hg',
 			\ 'is_volatile'    : 1,
-			\ 'max_candidates' : 30,
-			\ 'required_pattern_length': 3,
+			\ 'max_candidates' : g:unite_source_hg_grep_max_candidates,
+			\ 'required_pattern_length': g:unite_source_hg_grep_required_pattern_length,
 			\ 'hooks'    : {},
 			\ }
 
