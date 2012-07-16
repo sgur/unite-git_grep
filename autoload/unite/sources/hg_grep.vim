@@ -33,26 +33,18 @@ function! unite#sources#hg_grep#check()"{{{
 endfunction"}}}
 
 function! unite#sources#hg_grep#grep(input)"{{{
-	let result = unite#util#system('hg grep -n ' . a:input . ' .')
-	let matches = split(result, '\r\n\|\r\|\n')
-	let root = unite#util#system('hg root')[0:-2]
-	let sub_path = unite#util#substitute_path_separator(strpart(getcwd(), len(root))) .'/'
-	let candidates = []
-	for entry in matches
-		let entry = substitute(entry, ':[0-9]\ze:', '', 'g')
-		let path = matchstr(entry, '^[^:]\+\ze:')
-		let line = matchstr(entry, '^[^:]\+:\zs[0-9]\+\ze:')
-		let skip = len(matchstr(path, sub_path[1:]))
-		let dict = {
-					\ 'word': strpart(entry, skip),
-					\ 'source': 'vcs_grep/hg',
-					\ 'kind' : 'jump_list',
-					\ 'action__path': strpart(path, skip),
-					\ 'action__line': line,
-					\ }
-		call add(candidates, dict)
-	endfor
-	return candidates
+	let l:result = unite#util#system('hg grep -n ' . a:input . ' .')
+	let l:matches = split(result, '\r\n\|\r\|\n')
+  let l:entries = map(l:matches, 'split(v:val, ":")')
+  return map(l:entries,
+    \ '{
+    \   "word": join([v:val[0], v:val[2], join(v:val[3:], ":")], ":"),
+    \   "source": "vcs_grep/hg",
+    \   "kind": "jump_list",
+    \   "action__path": v:val[0],
+    \   "action__line": v:val[2],
+    \   "action__text": join(v:val[3:], ":"),
+    \ }')
 endfunction"}}}
 
 " vim: foldmethod=marker
