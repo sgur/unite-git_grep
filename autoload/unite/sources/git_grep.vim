@@ -39,7 +39,7 @@ function! unite#sources#git_grep#check()"{{{
 endfunction"}}}
 
 function! unite#sources#git_grep#grep(input)"{{{
-	let l:result = unite#util#system('git grep -n ' . a:input)
+	let l:result = unite#util#system('git grep -n "' . a:input . '"')
 	let l:matches = split(l:result, '\r\n\|\r\|\n')
   let l:entries = map(l:matches, '[v:val, split(v:val, ":")]')
   return map(l:entries,
