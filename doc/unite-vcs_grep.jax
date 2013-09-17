@@ -76,7 +76,7 @@ License : MIT license {{{
 	るまで少し時間がかかります。
 
 	また、git のみに限定して検索を行いたい場合は、source として
-	vcs_grep/hg が利用できます。
+	vcs_grep/git が利用できます。
 >
 	:Unite vcs_grep/git
 <
