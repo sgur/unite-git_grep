@@ -1,6 +1,4 @@
-unit-git_grep
+This plugin is obsolete !!!
 ====
-
-**This plugin is obsolete !!!**
 
 Please use [unite-grep-vcs](https://github.com/lambdalisue/unite-grep-vcs).
